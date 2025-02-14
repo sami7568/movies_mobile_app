@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movies_app/app/api_end_points.dart';
 import 'package:movies_app/ui/common/app_colors.dart';
 import 'package:movies_app/ui/widgets/common/movie_card/movie_card.dart';
 import 'package:stacked/stacked.dart';

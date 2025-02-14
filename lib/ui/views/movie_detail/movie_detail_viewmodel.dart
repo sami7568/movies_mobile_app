@@ -7,7 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class MovieDetailViewModel extends BaseViewModel {
   final _dbService = locator<DatabaseService>();
-  final _navigationService = locator<NavigationService>();
+  final navigationService = locator<NavigationService>();
 
   Future<MovieDetailResponse> fetchMovieDetail(id) async {
     // setBusy(true);
@@ -18,10 +18,10 @@ class MovieDetailViewModel extends BaseViewModel {
   }
 
   void navigateToTrailer(int id) {
-    _navigationService.navigateToVideoPlayerView(id: id);
+    navigationService.navigateToVideoPlayerView(id: id);
   }
 
   void navigateToTickets(int id) {
-    _navigationService.navigateToTicketView(id: id);
+    navigationService.navigateToTicketView(id: id);
   }
 }

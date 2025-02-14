@@ -20,3 +20,4 @@ const Color kcGoldenMustardYellow = Color(0xffCD9D0F);
 
 const Color ktextColor = Color(0xff202C43);
 const Color kcGreytextColor = Color(0xff8F8F8F);
+const Color kcGreyColor = Color(0xffA6A6A6);
