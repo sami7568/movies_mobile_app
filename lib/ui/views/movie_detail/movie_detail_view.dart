@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:movies_app/app/app.locator.dart';
+import 'package:movies_app/app/app.router.dart';
 import 'package:movies_app/ui/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'movie_detail_viewmodel.dart';
 
 class MovieDetailView extends StackedView<MovieDetailViewModel> {
@@ -121,9 +124,13 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
             style: GoogleFonts.poppins(fontSize: 16.sp, color: Colors.white),
           ),
           SizedBox(height: 15.h),
-          _buildActionButton("Get Tickets", kcBabyBlue, () {}),
+          _buildActionButton("Get Tickets", kcBabyBlue, () {
+            locator<NavigationService>().navigateToTicketView(id: id);
+          }),
           SizedBox(height: 10.h),
-          _buildActionButton("Watch Trailer", Colors.transparent, () {}),
+          _buildActionButton("Watch Trailer", Colors.transparent, () {
+            locator<NavigationService>().navigateToVideoPlayerView(id: id);
+          }),
         ],
       ),
     );
@@ -136,7 +143,7 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
         fixedSize: Size(243.w, 50.h),
-        side: BorderSide(color: kcBabyBlue),
+        side: const BorderSide(color: kcBabyBlue),
         backgroundColor: color,
       ),
       child: Text(
