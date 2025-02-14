@@ -29,9 +29,7 @@ class MovieCard extends StackedView<MovieCardModel> {
         borderRadius: BorderRadius.circular(10.r),
         color: Colors.white,
         image: DecorationImage(
-          image: NetworkImage(movie.backdropUrl),
-          fit: BoxFit.cover,
-        ),
+            image: NetworkImage(movie.backdropUrl), fit: BoxFit.cover),
       ),
       child: Stack(
         children: [

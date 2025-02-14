@@ -133,7 +133,10 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
                                       ),
                                       SizedBox(height: 15.h),
                                       OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            viewModel.navigateToTickets(
+                                                snapshot.data!.id);
+                                          },
                                           style: OutlinedButton.styleFrom(
                                             shape: RoundedRectangleBorder(
                                               borderRadius:

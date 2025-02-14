@@ -20,4 +20,8 @@ class MovieDetailViewModel extends BaseViewModel {
   void navigateToTrailer(int id) {
     _navigationService.navigateToVideoPlayerView(id: id);
   }
+
+  void navigateToTickets(int id) {
+    _navigationService.navigateToTicketView(id: id);
+  }
 }

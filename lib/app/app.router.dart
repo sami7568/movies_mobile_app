@@ -5,16 +5,17 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/views/home/home_view.dart' as _i3;
 import 'package:movies_app/ui/views/movie_detail/movie_detail_view.dart' as _i6;
 import 'package:movies_app/ui/views/movies/movies_view.dart' as _i4;
 import 'package:movies_app/ui/views/search/search_view.dart' as _i5;
 import 'package:movies_app/ui/views/startup/startup_view.dart' as _i2;
+import 'package:movies_app/ui/views/ticket/ticket_view.dart' as _i8;
 import 'package:movies_app/ui/views/video_player/video_player_view.dart' as _i7;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i9;
+import 'package:stacked_services/stacked_services.dart' as _i10;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -29,6 +30,8 @@ class Routes {
 
   static const videoPlayerView = '/video-player-view';
 
+  static const ticketView = '/ticket-view';
+
   static const all = <String>{
     startupView,
     homeView,
@@ -36,6 +39,7 @@ class Routes {
     searchView,
     movieDetailView,
     videoPlayerView,
+    ticketView,
   };
 }
 
@@ -65,44 +69,55 @@ class StackedRouter extends _i1.RouterBase {
       Routes.videoPlayerView,
       page: _i7.VideoPlayerView,
     ),
+    _i1.RouteDef(
+      Routes.ticketView,
+      page: _i8.TicketView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.HomeView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.HomeView(),
         settings: data,
       );
     },
     _i4.MoviesView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.MoviesView(),
         settings: data,
       );
     },
     _i5.SearchView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.SearchView(),
         settings: data,
       );
     },
     _i6.MovieDetailView: (data) {
       final args = data.getArgs<MovieDetailViewArguments>(nullOk: false);
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => _i6.MovieDetailView(key: args.key, id: args.id),
         settings: data,
       );
     },
     _i7.VideoPlayerView: (data) {
       final args = data.getArgs<VideoPlayerViewArguments>(nullOk: false);
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => _i7.VideoPlayerView(key: args.key, id: args.id),
+        settings: data,
+      );
+    },
+    _i8.TicketView: (data) {
+      final args = data.getArgs<TicketViewArguments>(nullOk: false);
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i8.TicketView(key: args.key, id: args.id),
         settings: data,
       );
     },
@@ -121,7 +136,7 @@ class MovieDetailViewArguments {
     required this.id,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final int id;
 
@@ -148,7 +163,7 @@ class VideoPlayerViewArguments {
     required this.id,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final int id;
 
@@ -169,7 +184,34 @@ class VideoPlayerViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i9.NavigationService {
+class TicketViewArguments {
+  const TicketViewArguments({
+    this.key,
+    required this.id,
+  });
+
+  final _i9.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "id": "$id"}';
+  }
+
+  @override
+  bool operator ==(covariant TicketViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ id.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i10.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -227,7 +269,7 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }
 
   Future<dynamic> navigateToMovieDetailView({
-    _i8.Key? key,
+    _i9.Key? key,
     required int id,
     int? routerId,
     bool preventDuplicates = true,
@@ -244,7 +286,7 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }
 
   Future<dynamic> navigateToVideoPlayerView({
-    _i8.Key? key,
+    _i9.Key? key,
     required int id,
     int? routerId,
     bool preventDuplicates = true,
@@ -254,6 +296,23 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.videoPlayerView,
         arguments: VideoPlayerViewArguments(key: key, id: id),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToTicketView({
+    _i9.Key? key,
+    required int id,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.ticketView,
+        arguments: TicketViewArguments(key: key, id: id),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -317,7 +376,7 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }
 
   Future<dynamic> replaceWithMovieDetailView({
-    _i8.Key? key,
+    _i9.Key? key,
     required int id,
     int? routerId,
     bool preventDuplicates = true,
@@ -334,7 +393,7 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }
 
   Future<dynamic> replaceWithVideoPlayerView({
-    _i8.Key? key,
+    _i9.Key? key,
     required int id,
     int? routerId,
     bool preventDuplicates = true,
@@ -344,6 +403,23 @@ extension NavigatorStateExtension on _i9.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.videoPlayerView,
         arguments: VideoPlayerViewArguments(key: key, id: id),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithTicketView({
+    _i9.Key? key,
+    required int id,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.ticketView,
+        arguments: TicketViewArguments(key: key, id: id),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

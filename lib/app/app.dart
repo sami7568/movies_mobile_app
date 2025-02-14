@@ -11,6 +11,7 @@ import 'package:movies_app/ui/views/movies/movies_view.dart';
 import 'package:movies_app/ui/views/search/search_view.dart';
 import 'package:movies_app/ui/views/movie_detail/movie_detail_view.dart';
 import 'package:movies_app/ui/views/video_player/video_player_view.dart';
+import 'package:movies_app/ui/views/ticket/ticket_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -21,6 +22,7 @@ import 'package:movies_app/ui/views/video_player/video_player_view.dart';
     MaterialRoute(page: SearchView),
     MaterialRoute(page: MovieDetailView),
     MaterialRoute(page: VideoPlayerView),
+    MaterialRoute(page: TicketView),
 // @stacked-route
   ],
   dependencies: [
