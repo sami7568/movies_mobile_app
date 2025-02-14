@@ -12,6 +12,7 @@ import 'package:movies_app/ui/views/search/search_view.dart';
 import 'package:movies_app/ui/views/movie_detail/movie_detail_view.dart';
 import 'package:movies_app/ui/views/video_player/video_player_view.dart';
 import 'package:movies_app/ui/views/ticket/ticket_view.dart';
+import 'package:movies_app/ui/bottom_sheets/proceed_to_pay/proceed_to_pay_sheet.dart';
 // @stacked-import
 
 @StackedApp(
@@ -36,7 +37,8 @@ import 'package:movies_app/ui/views/ticket/ticket_view.dart';
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
-    // @stacked-bottom-sheet
+    StackedBottomsheet(classType: ProceedToPaySheet),
+// @stacked-bottom-sheet
   ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),

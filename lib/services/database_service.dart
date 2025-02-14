@@ -25,4 +25,10 @@ class DatabaseService {
         .get(endPoint: "movie/$id/videos", params: {"api_key": apiKey});
     return MovieVideosResponse.fromJson(response.data);
   }
+
+  Future<MovieVideosResponse> getSearchMovies() async {
+    final response = await _apiService
+        .get(endPoint: "movie/search/collection", params: {"api_key": apiKey});
+    return MovieVideosResponse.fromJson(response.data);
+  }
 }

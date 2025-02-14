@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:movies_app/app/app.locator.dart';
 import 'package:movies_app/responses/videos_response.dart';
 import 'package:movies_app/services/database_service.dart';
@@ -28,11 +29,19 @@ class VideoPlayerViewModel extends BaseViewModel {
     )..addListener(() {
         if (controller.value.playerState == PlayerState.ended) {
           // controller.dispose();
+          setPortraitMood();
           _navigationService.back();
         }
       });
     isVideoLoading = false;
     notifyListeners();
+  }
+
+  setPortraitMood() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   void goBack() {

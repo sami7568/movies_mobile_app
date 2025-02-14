@@ -18,52 +18,18 @@ class MovieCard extends StackedView<MovieCardModel> {
       width: 335.w,
       margin: EdgeInsets.symmetric(horizontal: 20.w),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black.withOpacity(0),
-            Colors.black,
-          ],
-          begin: Alignment.center,
-          end: Alignment.bottomCenter,
-        ),
         borderRadius: BorderRadius.circular(10.r),
         color: Colors.white,
         image: DecorationImage(
-            image: NetworkImage(movie.backdropUrl), fit: BoxFit.cover),
+          image: NetworkImage(movie.backdropUrl),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 70.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0),
-                    Colors.black,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 20.h,
-            left: 20.w,
-            child: Text(
-              movie.title,
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          )
+          const _Overlay(),
+          _MovieTitle(title: movie.title),
         ],
       ),
     );
@@ -71,4 +37,47 @@ class MovieCard extends StackedView<MovieCardModel> {
 
   @override
   MovieCardModel viewModelBuilder(BuildContext context) => MovieCardModel();
+}
+
+/// Widget for displaying the movie background image
+class _Overlay extends StatelessWidget {
+  const _Overlay({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.r),
+        gradient: LinearGradient(
+          colors: [Colors.black.withOpacity(0), Colors.black],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+    );
+  }
+}
+
+/// Widget for displaying the movie title
+class _MovieTitle extends StatelessWidget {
+  final String title;
+
+  const _MovieTitle({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 20.h,
+      left: 20.w,
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
 }

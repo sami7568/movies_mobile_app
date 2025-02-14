@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class MovieDetailResponse {
   bool adult;
   String backdropPath;
@@ -91,6 +93,8 @@ class MovieDetailResponse {
         video = json['video'],
         voteAverage = json['vote_average'],
         voteCount = json['vote_count'];
+
+ 
 
   Map<String, dynamic> toJson() => {
         'adult': adult,

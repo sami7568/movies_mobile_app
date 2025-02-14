@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/app/app.bottomsheets.dart';
 import 'package:movies_app/app/app.dialogs.dart';
@@ -12,6 +13,12 @@ Future<void> main() async {
   await setupLocator(environment: Environment.test);
   setupDialogUi();
   setupBottomSheetUi();
+
+  // Restrict app to portrait mode
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,  // Portrait mode (top-up)
+    DeviceOrientation.portraitDown, // Portrait mode (bottom-up)
+  ]);
   runApp(const MainApp());
 }
 

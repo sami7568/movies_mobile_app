@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:movies_app/ui/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
 
@@ -38,7 +37,7 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    snapshot.data?.backdropUrl ?? ""),
+                                    snapshot.data?.posterUrl ?? ""),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -110,19 +109,19 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
+                                      // Text(
+                                      //   snapshot.data?.tagline ?? "",
+                                      //   textAlign: TextAlign.center,
+                                      //   maxLines: 1,
+                                      //   style: GoogleFonts.poppins(
+                                      //     fontSize: 16.sp,
+                                      //     fontWeight: FontWeight.w500,
+                                      //     color: Colors.white,
+                                      //   ),
+                                      // ),
+                                      // SizedBox(height: 6.h),
                                       Text(
-                                        snapshot.data?.tagline ?? "",
-                                        textAlign: TextAlign.center,
-                                        maxLines: 1,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(height: 6.h),
-                                      Text(
-                                        snapshot.data?.title ?? "",
+                                        "In theaters ${formatDate(snapshot.data?.releaseDate ?? "")}",
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.poppins(
                                           fontSize: 16.sp,
@@ -256,6 +255,13 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
             });
       }),
     );
+  }
+
+  formatDate(releaseDate) {
+    DateTime date = DateTime.parse(releaseDate); // December 22, 2021
+    String formattedDate = DateFormat('MMMM dd, yyyy').format(date);
+    print(formattedDate); // Output: 2021-12-22
+    return formattedDate;
   }
 
   // Color _getGenreColor(String genre) {
