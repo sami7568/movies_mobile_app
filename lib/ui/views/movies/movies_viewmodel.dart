@@ -13,10 +13,7 @@ class MoviesViewModel extends BaseViewModel {
   List<MoviesModel> moviesList = [];
 
   Future<List<MoviesModel>> fetchMovies() async {
-    // setBusy(true);
     final MoviesResponse response = await _databaseService.getMoviesList();
-    // print(response.toJson());
-    // setBusy(false);
     return response.moviesList;
   }
 
@@ -25,11 +22,6 @@ class MoviesViewModel extends BaseViewModel {
   }
 
   navigateToMoviesDetailView(int id) {
-    navigationService.navigateToView(MovieDetailView(id: id)
-        // Routes.movieDetailView,
-        // arguments: {
-        // "id": id.toString(),
-        // },
-        );
+    navigationService.navigateToView(MovieDetailView(id: id));
   }
 }

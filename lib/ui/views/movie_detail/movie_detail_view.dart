@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:movies_app/ui/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
-
 import 'movie_detail_viewmodel.dart';
 
 class MovieDetailView extends StackedView<MovieDetailViewModel> {
@@ -17,304 +16,206 @@ class MovieDetailView extends StackedView<MovieDetailViewModel> {
       BuildContext context, MovieDetailViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: kcBackgroundColor,
-      body: Builder(builder: (context) {
-        return FutureBuilder(
-            future: viewModel.fetchMovieDetail(id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    snapshot.data?.posterUrl ?? ""),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.5,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.black,
-                                    Colors.black.withOpacity(0),
-                                  ],
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 95.h,
-                                  padding: EdgeInsets.only(
-                                      top: 50.h, left: 24.w, bottom: 10.h),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        visualDensity:
-                                            const VisualDensity(vertical: -4),
-                                        padding: EdgeInsets.zero,
-                                        icon: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: Colors.white,
-                                          size: 20.sp,
-                                        ),
-                                      ),
-                                      SizedBox(width: 10.w),
-                                      Text(
-                                        "Watch",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                            height: 1,
-                                            color: Colors.white),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                const Spacer(),
-
-                                ///
-                                Container(
-                                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      // Text(
-                                      //   snapshot.data?.tagline ?? "",
-                                      //   textAlign: TextAlign.center,
-                                      //   maxLines: 1,
-                                      //   style: GoogleFonts.poppins(
-                                      //     fontSize: 16.sp,
-                                      //     fontWeight: FontWeight.w500,
-                                      //     color: Colors.white,
-                                      //   ),
-                                      // ),
-                                      // SizedBox(height: 6.h),
-                                      Text(
-                                        "In theaters ${formatDate(snapshot.data?.releaseDate ?? "")}",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                          height: 20 / 16,
-                                        ),
-                                      ),
-                                      SizedBox(height: 15.h),
-                                      OutlinedButton(
-                                          onPressed: () {
-                                            viewModel.navigateToTickets(
-                                                snapshot.data!.id);
-                                          },
-                                          style: OutlinedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
-                                            ),
-                                            fixedSize: Size(243.w, 50.h),
-                                            side: const BorderSide(
-                                              color: kcBabyBlue,
-                                            ),
-                                            backgroundColor: kcBabyBlue,
-                                          ),
-                                          child: Text(
-                                            "Get Tickets",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          )),
-                                      SizedBox(height: 10.h),
-                                      OutlinedButton.icon(
-                                        onPressed: () {
-                                          viewModel.navigateToTrailer(
-                                              snapshot.data!.id);
-                                        },
-                                        style: OutlinedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.r),
-                                          ),
-                                          side: const BorderSide(
-                                              color: kcBabyBlue, width: 1),
-                                          // maximumSize: Size(),
-                                          fixedSize: Size(243.w, 50.h),
-                                        ),
-                                        icon: const Icon(
-                                          Icons.play_arrow,
-                                          color: Colors.white,
-                                        ),
-                                        label: Text(
-                                          "Watch Trailer",
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    ///
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 40.h, vertical: 27.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Genres",
-                            style: GoogleFonts.poppins(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: ktextColor,
-                            ),
-                          ),
-                          SizedBox(height: 10.h),
-                          Wrap(
-                            children: [
-                              if (snapshot.data?.genres != null)
-                                ...snapshot.data!.genres.map((genre) => Padding(
-                                      padding: EdgeInsets.only(right: 5.h),
-                                      child: _generesChip(genre.name,
-                                          _getGenreColor(genre.name)),
-                                    )),
-                            ],
-                          ),
-                          SizedBox(height: 22.h),
-                          const Divider(color: kcGreytextColor),
-                          SizedBox(height: 15.h),
-                          Text(
-                            "Overview",
-                            style: GoogleFonts.poppins(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: ktextColor,
-                            ),
-                          ),
-                          SizedBox(height: 15.h),
-                          Text(
-                            snapshot.data?.overview ?? "",
-                            maxLines: 10,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: kcGreytextColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            });
-      }),
+      body: FutureBuilder(
+        future: viewModel.fetchMovieDetail(id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasData) {
+            return Column(
+              children: [
+                _buildMoviePoster(context, snapshot.data!),
+                _buildMovieDetails(context, snapshot.data, viewModel),
+              ],
+            );
+          } else {
+            return const Center(child: Text("Failed to load movie details"));
+          }
+        },
+      ),
     );
   }
 
-  formatDate(releaseDate) {
-    DateTime date = DateTime.parse(releaseDate); // December 22, 2021
-    String formattedDate = DateFormat('MMMM dd, yyyy').format(date);
-    print(formattedDate); // Output: 2021-12-22
-    return formattedDate;
-  }
-
-  // Color _getGenreColor(String genre) {
-  //   switch (genre.toLowerCase()) {
-  //     case "thriller":
-  //       return kcPinkishMagenta;
-  //     case "science":
-  //       return kcroyalPurple;
-  //     case "fiction":
-  //       return kcGoldenMustardYellow;
-  //     case "action":
-  //       return kcAquaGreen;
-  //     default:
-  //       return kcVoilet; // Set a default color
-  //   }
-  // }
-
-  Color _getGenreColor(String text) {
-    final int hash = text.codeUnits.fold(0, (prev, elem) => prev + elem);
-    final Random random = Random(hash);
-
-    return Color.fromARGB(
-      255,
-      50 + random.nextInt(100), // Red (50-150)
-      50 + random.nextInt(100), // Green (50-150)
-      50 + random.nextInt(100), // Blue (50-150)
+  Widget _buildMoviePoster(BuildContext context, movie) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          _buildBackgroundImage(movie.posterUrl),
+          _buildGradientOverlay(),
+          _buildHeader(context),
+          _buildMovieInfo(movie),
+        ],
+      ),
     );
   }
 
-  _generesChip(String title, Color color) {
-    return Chip(
-      label: Text(
-        title,
-        style: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
+  Widget _buildBackgroundImage(String imageUrl) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(imageUrl),
+          fit: BoxFit.cover,
         ),
       ),
-      surfaceTintColor: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      padding: EdgeInsets.symmetric(horizontal: 4.w),
-      backgroundColor: color,
     );
+  }
+
+  Widget _buildGradientOverlay() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        height: 200.h,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Colors.transparent],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 50.h),
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon:
+                  Icon(Icons.arrow_back_ios, color: Colors.white, size: 20.sp),
+            ),
+            SizedBox(width: 10.w),
+            Text(
+              "Watch",
+              style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMovieInfo(dynamic movie) {
+    return Positioned(
+      bottom: 20.h,
+      left: 0,
+      right: 0,
+      child: Column(
+        children: [
+          Text(
+            "In theaters ${_formatDate(movie?.releaseDate ?? "")}",
+            style: GoogleFonts.poppins(fontSize: 16.sp, color: Colors.white),
+          ),
+          SizedBox(height: 15.h),
+          _buildActionButton("Get Tickets", kcBabyBlue, () {}),
+          SizedBox(height: 10.h),
+          _buildActionButton("Watch Trailer", Colors.transparent, () {}),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(String text, Color color, VoidCallback onPressed) {
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+        fixedSize: Size(243.w, 50.h),
+        side: BorderSide(color: kcBabyBlue),
+        backgroundColor: color,
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.poppins(fontSize: 14.sp, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildMovieDetails(
+      BuildContext context, dynamic movie, MovieDetailViewModel viewModel) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 27.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle("Genres"),
+            Wrap(
+              children: movie?.genres
+                      ?.map<Widget>((genre) => _buildGenreChip(genre.name))
+                      .toList() ??
+                  [],
+            ),
+            SizedBox(height: 22.h),
+            const Divider(color: kcGreytextColor),
+            _buildSectionTitle("Overview"),
+            Text(
+              movie?.overview ?? "",
+              maxLines: 10,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  GoogleFonts.poppins(fontSize: 12.sp, color: kcGreytextColor),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(
+            fontSize: 16.sp, fontWeight: FontWeight.w600, color: ktextColor),
+      ),
+    );
+  }
+
+  Widget _buildGenreChip(String title) {
+    return Padding(
+      padding: EdgeInsets.only(right: 5.w),
+      child: Chip(
+        label: Text(title,
+            style: GoogleFonts.poppins(fontSize: 12.sp, color: Colors.white)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        backgroundColor: _getGenreColor(title),
+      ),
+    );
+  }
+
+  String _formatDate(String releaseDate) {
+    try {
+      return DateFormat('MMMM dd, yyyy').format(DateTime.parse(releaseDate));
+    } catch (_) {
+      return "Unknown Date";
+    }
+  }
+
+  Color _getGenreColor(String text) {
+    final Random random = Random(text.hashCode);
+    return Color.fromARGB(255, 50 + random.nextInt(100),
+        50 + random.nextInt(100), 50 + random.nextInt(100));
   }
 
   @override
   MovieDetailViewModel viewModelBuilder(BuildContext context) =>
       MovieDetailViewModel();
-
-  @override
-  void onViewModelReady(MovieDetailViewModel viewModel) {
-    super.onViewModelReady(viewModel);
-    viewModel.fetchMovieDetail(id);
-  }
 }

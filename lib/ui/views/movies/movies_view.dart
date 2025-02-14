@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/ui/common/app_colors.dart';
 import 'package:movies_app/ui/widgets/common/movie_card/movie_card.dart';
 import 'package:stacked/stacked.dart';
-
 import 'movies_viewmodel.dart';
 
 class MoviesView extends StackedView<MoviesViewModel> {
