@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/models/model_movies.dart';
 import 'package:stacked/stacked.dart';
-
 import 'movie_card_model.dart';
 
 class MovieCard extends StackedView<MovieCardModel> {
